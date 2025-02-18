@@ -10,7 +10,7 @@
 .containers {
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
@@ -47,12 +47,17 @@
   width: 100%;
 }
 .photoStrip {
-  min-width: 84px;
   aspect-ratio: 8/27;
 }
 
+.bgBtnContainer {
+  max-width: 350px;
+  width: 30vw;
+  min-width: 225px;
+}
+
 .navBubble {
-  position: absolute;
+  position: fixed;
   top: 85%;
   left: 50%;
   transform: translateX(-50%);
@@ -78,6 +83,16 @@
   width: 50%;
   left: 50%;
 }
+
+@keyframes cameraFlash {
+  0% { background-color: white; }
+  100% { background-color: transparent; }
+}
+
+.camera-flash {
+  animation: cameraFlash 0.3s ease-out;
+}
+
 
 .poppins-thin {
   font-family: "Poppins", serif;
@@ -191,4 +206,5 @@
   .cameraContainer {
     width: 95%;
   }
+
 }

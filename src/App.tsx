@@ -6,14 +6,19 @@ import Home from './Components/Home'
 import Photobooth from './Components/Photobooth';
 
 import './App.css'
+import { useState } from 'react';
 
 function App() {
 
+  const [activeComponent, setActiveComponent] = useState('home')
+
+  const handleActiveComponent = (component:string) => setActiveComponent(component)
+
   return (
     <>
-   {/* <Home /> */}
-   <Photobooth />
-   <Navbar />
+   {activeComponent === 'home' && <Home onChangeView = {handleActiveComponent} />}
+   {activeComponent === 'photobooth' && <Photobooth />}
+   <Navbar onChangeView = {handleActiveComponent} />
    </>
   )
 }

@@ -7,7 +7,7 @@ import Camera from './Camera';
 import Photo from './Photo';
 import { useState } from 'react';
 
-export default function Photobooth() {
+export default function Photobooth( { onChangeView:any} ) {
     const [startCamera, setStartCamera] = useState(false)
     const [capturedImages, setCapturedImages] = useState<string[]>([]);
     const [isDone, setIsDone] = useState(false);
@@ -19,13 +19,13 @@ export default function Photobooth() {
 
     return(
         <Container fluid className='containers photobooth d-flex justify-content-center align-items-center flex-column'>
-            {/* {!startCamera && <Instructions />}
-            {!startCamera && <Button onClick={() => setStartCamera(true)} className='btn btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
+            {!startCamera && <Instructions />}
+            {!startCamera && <Button onClick={() => {setStartCamera(true) }} className='btn btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
             {!isDone && startCamera && <Camera onCaptureComplete={handleCaptureComplete}
                 capturedImages={capturedImages}
                 isDone={isDone} />}
-            {isDone && <Photo images = {capturedImages}/>} */}
-            <Photo />
+            {isDone && <Photo images = {capturedImages}/>}
+            {/* <Photo /> */}
         </Container>
     )
 }
