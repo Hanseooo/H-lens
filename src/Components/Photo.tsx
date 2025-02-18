@@ -2,7 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import BackgroundBtn from './BackgroundBtn';
 
-export default function Photo( props )  {
+interface PhotoProps {
+    images: string[]
+}
+
+
+export default function Photo( {images}: PhotoProps)  {
     
     return(
         <Container className='containers mt-4'>
@@ -10,7 +15,7 @@ export default function Photo( props )  {
                 <Col sm = {6} className='d-flex justify-content-center mb-2'>
                     <div className='photoStrip bg-light d-flex flex-column align-items-center pt-1'>
                         {
-                            props.images.map((image:string, index:number) => (
+                            images.map((image:string, index:number) => (
                                     <img key = {index} src= {image}  className='fourByThree m-1' style={{width: "200px", transform: 'scaleX(-1)'}}/>
                             ))
                         }

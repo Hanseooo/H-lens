@@ -3,7 +3,11 @@ import { Nav, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faCamera, faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 
-export default function Navbar( { onChangeView } ) {
+interface NavbarProps {
+    onChangeView: (view: string) => void;
+}
+
+export default function Navbar( { onChangeView }: NavbarProps) {
 
     return(
         <Nav className='bg-transparent navBubble d-flex' style={{zIndex:0}}>

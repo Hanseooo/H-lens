@@ -7,7 +7,7 @@ import Camera from './Camera';
 import Photo from './Photo';
 import { useState } from 'react';
 
-export default function Photobooth( { onChangeView:any} ) {
+export default function Photobooth() {
     const [startCamera, setStartCamera] = useState(false)
     const [capturedImages, setCapturedImages] = useState<string[]>([]);
     const [isDone, setIsDone] = useState(false);

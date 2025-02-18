@@ -2,7 +2,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Button } from 'react-bootstrap';
 // import Navbar from './/Navbar'
 
-export default function Home( { onChangeView } ) {
+interface HomeProps {
+    onChangeView: (view: string) => void;
+}
+
+export default function Home( { onChangeView }:HomeProps ) {
     return(
         <>
         <Container fluid className='containers home d-flex justify-content-center align-items-center flex-column'>
