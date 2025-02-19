@@ -16,7 +16,7 @@ export default function Photo( {images}: PhotoProps)  {
                     <div className='photoStrip bg-light d-flex flex-column align-items-center pt-1'>
                         {
                             images.map((image:string, index:number) => (
-                                    <img key = {index} src= {image}  className='fourByThree m-1' style={{width: "200px", transform: 'scaleX(-1)'}}/>
+                                    <img key = {index} src= {image}  className='fourByThree m-1' style={{width: "200px", transform: 'scaleX(-1)', objectFit:"cover"}}/>
                             ))
                         }
                         <h2 className='text-center poppins-light-italic m-3'>H-Lens</h2>
