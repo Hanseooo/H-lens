@@ -62,7 +62,7 @@ export default function Photo( {images, handleRetake}: PhotoProps)  {
         <Container className='containers mt-4'>
             <Row className='' style={{height: "80%"}}>
                 <Col sm = {6} className='d-flex justify-content-center mb-2'>
-                    <div className='photoStrip d-flex flex-column align-items-center pt-1' style={currentPhotoBg}>
+                    <div className='photoStrip d-flex flex-column align-items-center p-1' style={currentPhotoBg}>
                         {
                             images.map((image:string, index:number) => (
                                     <img key = {index} src= {image}  className='fourByThree m-1' style={{width: "200px", transform: 'scaleX(-1)', objectFit:"cover", backgroundPosition: "center"}}/>
