@@ -11,20 +11,33 @@ export default function Photobooth() {
     const [startCamera, setStartCamera] = useState(false)
     const [capturedImages, setCapturedImages] = useState<string[]>([]);
     const [isDone, setIsDone] = useState(false);
+    const [retakeCount, setRetakeCount] = useState(0);
+
 
     const handleCaptureComplete = (images: string[], done: boolean) => {
         setCapturedImages(images);
         setIsDone(done);
     };
+    const handleRetake = () => {
+        setCapturedImages([]); 
+        setIsDone(false);
+        setStartCamera(true);
+        setRetakeCount(prev => prev + 1);
+    };
 
     return(
         <Container fluid className='containers photobooth d-flex justify-content-center align-items-center flex-column'>
             {!startCamera && <Instructions />}
-            {!startCamera && <Button onClick={() => {setStartCamera(true) }} className='btn btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
-            {!isDone && startCamera && <Camera onCaptureComplete={handleCaptureComplete}
-                capturedImages={capturedImages}
-                isDone={isDone} />}
-            {isDone && <Photo images = {capturedImages}/>}
+            {!startCamera && <Button onClick={() => {setStartCamera(true) }} className='btn btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg rounded-4'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
+            {(!isDone && startCamera) && 
+                <Camera 
+                    key={`camera-${retakeCount}`}
+                    onCaptureComplete={handleCaptureComplete}
+                    capturedImages={capturedImages}
+                    isDone={isDone} 
+                />
+            }
+            {isDone && <Photo images = {capturedImages} handleRetake = {handleRetake} />}
             {/* <Photo /> */}
         </Container>
     )

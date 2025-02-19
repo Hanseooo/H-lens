@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
 import cameraSfx from '../assets/audio/camerasfx.mp3'
 import countdownSfx from '../assets/audio/countdown.mp3'
-
-
+import CameraVideo from './CameraVideo';
 
 interface CameraProps {
     onCaptureComplete: (images: string[], done: boolean) => void;
@@ -25,6 +24,8 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone }: C
     const [countDownSound] = useState(new Audio(countdownSfx))
     const isDoneRef = useRef(isDone)
 
+    
+
     // When capture is complete (4 images taken)
     useEffect(() => {
         if (capturedImages.length === 4) {
@@ -34,6 +35,12 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone }: C
     }, [capturedImages, onCaptureComplete]);
 
     useEffect(() => {
+        // Reset internal state
+        setCountdown(5);
+        setIsCounting(false);
+        setIsFlashing(false);
+    
+        // Reinitialize camera
         const startCamera = async () => {
             try {
                 const constraints = { video: true };
@@ -46,19 +53,18 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone }: C
                 console.error('Error accessing camera:', error);
             }
         };
-
+    
         startCamera();
         startCaptureProcess();
-
-
-
+    
         return () => {
+            // Cleanup camera stream
             if (videoRef.current?.srcObject) {
                 const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
                 tracks.forEach(track => track.stop());
             }
         };
-    }, []);
+    }, [isDone]);
 
     const playCameraSound = () => {
         cameraSound.currentTime = 0;
@@ -129,17 +135,7 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone }: C
         <Container className='d-flex flex-column align-items-center reduceMarginTop'>
             <p className='text-light fw-bold fs-4 '>{countdown}</p>
             <div className='d-flex flex-column justify-content-center align-items-center cameraContainer'>
-            <div className={`p-3 bg-light shadow ${isFlashing ? 'camera-flash' : ''}`}>
-                <div className = {`${isFlashing ? 'camera-flash fourByThree' : ''}`} style={{position: "absolute", width: "100%", height: "100%", zIndex:1, top:"50%", left:"50%", transform:'translate(-50%, -50%)'}} />
-                <video 
-                    className=''
-                    ref={videoRef} 
-                    autoPlay 
-                    playsInline
-                    style={{ width: '100%', maxWidth: '520px', transform: 'scaleX(-1)' }}
-                />
-            </div>
-
+            <CameraVideo   isFlashing={isFlashing} videoRef={videoRef}  />
             <p className='text-light fw-bold text-end fs-6 align-self-end mx-1'>
                 {capturedImages.length}/4
             </p>
@@ -147,3 +143,6 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone }: C
         </Container>
     )
 }
+
+
+  
