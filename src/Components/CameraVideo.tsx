@@ -11,7 +11,7 @@ const CameraVideo = forwardRef<HTMLDivElement, CameraVideoProps>(({ isFlashing, 
   return (
     <div
       ref={ref}
-      className={`p-3 bg-light shadow ${isFlashing ? 'camera-flash' : ''}`}
+      className={`p-3 bg-light shadow slit-in-vertical ${isFlashing ? 'camera-flash' : ''}`}
       style={{ filter: applyFilters(filter) }} // Apply filter to the parent div
     >
       <div className={`${isFlashing ? 'camera-flash fourByThree' : ''}`} style={{

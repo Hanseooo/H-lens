@@ -20,7 +20,7 @@ export default function SelectBgContainer({ handleSetBackground }: SelectBgConta
     ];
 
   return <div className='text-light border rounded-4  darkTransparentBg p-2 bgBtnContainer'>
-                <h4 className='text-center fw-bold'>Select Background</h4>
+                <h4 className='text-center fw-bold mb-2 border-bottom'>Select Background</h4>
                 <div className='d-flex flex-wrap justify-content-center'>
                     {
                         colors.map((color) => (

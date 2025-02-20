@@ -37,7 +37,7 @@ export default function Photobooth( { stopTimer, handleStopTimer }: PhotoboothPr
     return(
         <Container fluid className='containers photobooth d-flex justify-content-center align-items-center flex-column'>
             {!startCamera && <Instructions />}
-            {!startCamera && <Button onClick={() => {setStartCamera(true) }} className='btn btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg rounded-4'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
+            {!startCamera && <Button onClick={() => {setStartCamera(true) }} className='btn jello-horizontal btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg rounded-4'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
             {(!isDone && startCamera) && 
                 <Camera 
                     key={`camera-${retakeCount}`}

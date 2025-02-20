@@ -186,7 +186,7 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
     return (
         <Container className='d-flex flex-column align-items-center reduceMarginTop'>
             <p className='text-light fw-bold fs-4 '>{countdown}</p>
-            <div className='d-flex justify-content-center align-items-center flex-column flex-md-row'>
+            <div className='d-flex justify-content-center align-items-center align-items-md-start flex-column flex-md-row'>
                 <div className='d-flex flex-column justify-content-center align-items-center cameraContainer'>
                     <CameraVideo ref = {cameraVideoRef} filter = {filter} applyFilters = {applyFilters} isFlashing={isFlashing} videoRef={videoRef}  />
                     <p className='text-light fw-bold text-end fs-6 align-self-end mx-1'>
@@ -203,7 +203,7 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
                 <div className='capturedImgContainer d-flex flex-md-column flex-row flex-wrap align-items-md-start align-items-center justify-content-center justify-content-md-start'>
                         {
                             images.map((image:string, index:number) => (
-                                    <img key = {index} src= {image}  className='fourByThree imgPreview m-1  mx-md-2 border bg-light border-5 pb-2 border-light'/>
+                                    <img key = {index} src= {image}  className='fourByThree tilt-in-fwd-bl imgPreview m-1 shadow mx-md-2 border bg-light border-5 pb-2 border-light'/>
                             ))
                         }
                 </div>
