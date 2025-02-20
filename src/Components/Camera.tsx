@@ -5,6 +5,7 @@ import { useInterval } from '../hooks/useInterval';
 import cameraSfx from '../assets/audio/camerasfx.mp3'
 import countdownSfx from '../assets/audio/countdown.mp3'
 import CameraVideo from './CameraVideo';
+//import html2canvas from 'html2canvas';
 
 interface CameraProps {
     onCaptureComplete: (images: string[], done: boolean) => void;
@@ -23,7 +24,9 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
     const [isFlashing, setIsFlashing] = useState(false);
     const [cameraSound] = useState(new Audio(cameraSfx))
     const [countDownSound] = useState(new Audio(countdownSfx))
+    const [filter, setFilter] = useState('none')
     const isDoneRef = useRef(isDone)
+    const cameraVideoRef = useRef<HTMLDivElement>(null);
 
     
 
@@ -107,21 +110,35 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
         setCountdown(5);
     }
 
-    function captureImage() {
-        if (videoRef.current) {
+    // async function captureImage() {
+    //     if (cameraVideoRef.current) {
+    //         const canvas = await html2canvas(cameraVideoRef.current);
+    //         const imageData = canvas.toDataURL('image/png');
+    //         const newImages = [...capturedImages, imageData];
+    //         onCaptureComplete(newImages, newImages.length === 4);
+    //     }
+    // }
+
+    async function captureImage() {
+        if (videoRef.current && cameraVideoRef.current) {
+            const video = videoRef.current;
             const canvas = document.createElement('canvas');
-            canvas.width = videoRef.current.videoWidth;
-            canvas.height = videoRef.current.videoHeight;
-            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+    
             const ctx = canvas.getContext('2d');
             if (ctx) {
-                ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+                // Apply the filter to the canvas context
+                ctx.filter = applyFilters(filter);
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
                 const imageData = canvas.toDataURL('image/png');
                 const newImages = [...capturedImages, imageData];
                 onCaptureComplete(newImages, newImages.length === 4);
             }
         }
     }
+
 
     // function stopCamera() {
     //     if (videoRef.current?.srcObject) {
@@ -131,16 +148,40 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
     //     }
     // }
 
+    const filters = ['none', 'monochrome', 'sepia', 'monosepia', 'brightness']
+
+    const applyFilters = (filter:string) => {
+        switch (filter) {
+            case 'monochrome':
+                return ' grayscale(100%) contrast(90%) saturate(95%)';
+            case 'sepia':
+                return ' sepia(50%)';
+            case 'monosepia':
+                return ' grayscale(50%) sepia(25%) brightness(125%) saturate(110%)';
+            case 'brightness': 
+                return ' brightness(150%)';
+            default:
+                return 'brightness(100%)';
+        }
+    }
+
 
     return (
         <Container className='d-flex flex-column align-items-center reduceMarginTop'>
             <p className='text-light fw-bold fs-4 '>{countdown}</p>
             <div className='d-flex justify-content-center align-items-center flex-column flex-md-row'>
                 <div className='d-flex flex-column justify-content-center align-items-center cameraContainer'>
-                    <CameraVideo   isFlashing={isFlashing} videoRef={videoRef}  />
+                    <CameraVideo ref = {cameraVideoRef} filter = {filter} applyFilters = {applyFilters} isFlashing={isFlashing} videoRef={videoRef}  />
                     <p className='text-light fw-bold text-end fs-6 align-self-end mx-1'>
                         {capturedImages.length}/4
                     </p>
+                    <div className='d-flex justify-content-center mb-4'>
+                        {
+                            filters.map((filter) => (
+                                <button onClick={()=> {setFilter(filter); console.log("this works")}} className='selectFilterBtn btn square rounded-4 border border-2 m-1 mx-2 flex-wrap' style={{minWidth: "48px", filter: `${applyFilters(filter)}`, zIndex: "10"}}/>
+                            ))
+                        }
+                    </div>
                 </div>
                 <div className='capturedImgContainer d-flex flex-md-column flex-row flex-wrap align-items-md-start align-items-center justify-content-center justify-content-md-start'>
                         {
