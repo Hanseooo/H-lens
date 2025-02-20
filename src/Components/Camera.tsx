@@ -12,9 +12,10 @@ interface CameraProps {
     capturedImages: string[];
     isDone: boolean;
     images: string[];
+    stopTimer: boolean;
 }
 
-export default function Camera( { onCaptureComplete, capturedImages, isDone, images }: CameraProps) {
+export default function Camera( { onCaptureComplete, capturedImages, isDone, images, stopTimer }: CameraProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     // const [capturedImages, setCapturedImages] = useState<string[]>([]);
     const [countdown, setCountdown] = useState(5);
@@ -65,10 +66,18 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
             // Cleanup camera stream
             if (videoRef.current?.srcObject) {
                 const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-                tracks.forEach(track => track.stop());
+                tracks.forEach(track => {
+                    console.log(`Stopping track: ${track.kind}`);
+                    track.stop(); // Stop each track to release the camera
+                });
+                videoRef.current.srcObject = null; // Clear the video source
             }
+    
+            // Pause and reset countDownSound
+            countDownSound.pause();
+            countDownSound.currentTime = 0;
         };
-    }, [isDone]);
+    }, [isDone, stopTimer, countDownSound]);
 
     const playCameraSound = () => {
         cameraSound.currentTime = 0;
@@ -139,6 +148,14 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
         }
     }
 
+    useEffect(() => {
+        if (stopTimer) {
+            setIsCounting(false);
+            countDownSound.pause();
+            countDownSound.currentTime = 0;
+        }
+    },[stopTimer, countDownSound])
+
 
     // function stopCamera() {
     //     if (videoRef.current?.srcObject) {
@@ -178,7 +195,7 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
                     <div className='d-flex justify-content-center mb-4'>
                         {
                             filters.map((filter) => (
-                                <button onClick={()=> {setFilter(filter); console.log("this works")}} className='selectFilterBtn btn square rounded-4 border border-2 m-1 mx-2 flex-wrap' style={{minWidth: "48px", filter: `${applyFilters(filter)}`, zIndex: "10"}}/>
+                                <button onClick={()=> {setFilter(filter)}} className='selectFilterBtn btn square rounded-4 border border-2 m-1 mx-2 flex-wrap' style={{minWidth: "48px", filter: `${applyFilters(filter)}`, zIndex: "10"}}/>
                             ))
                         }
                     </div>

@@ -5,13 +5,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 import Camera from './Camera';
 import Photo from './Photo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Photobooth() {
+interface PhotoboothProps {
+    stopTimer: boolean,
+    handleStopTimer: (decision:boolean) => void,
+}
+
+export default function Photobooth( { stopTimer, handleStopTimer }: PhotoboothProps) {
     const [startCamera, setStartCamera] = useState(false)
     const [capturedImages, setCapturedImages] = useState<string[]>([]);
     const [isDone, setIsDone] = useState(false);
     const [retakeCount, setRetakeCount] = useState(0);
+
+    useEffect(() => {
+        handleStopTimer(false)
+    })
 
 
     const handleCaptureComplete = (images: string[], done: boolean) => {
@@ -35,7 +44,8 @@ export default function Photobooth() {
                     onCaptureComplete={handleCaptureComplete}
                     images = {capturedImages}
                     capturedImages={capturedImages}
-                    isDone={isDone} 
+                    isDone={isDone}
+                     stopTimer={stopTimer}
                 />
             }
             {isDone && <Photo images = {capturedImages} handleRetake = {handleRetake} />}
