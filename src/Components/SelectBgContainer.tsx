@@ -29,7 +29,7 @@ export default function SelectBgContainer({ handleSetBackground }: SelectBgConta
                     }
                     {
                         backgrounds.map((bg) => (
-                            <Button onClick={() => handleSetBackground('background', bg)} className='bgImgDefault square rounded-circle border border-2 mt-2 mx-1' style={{minWidth: "48px", backgroundImage: `url(${bg})`}} />
+                            <Button onClick={() => handleSetBackground('background', bg)} className='bgImgDefault square rounded-circle border border-2 mt-2 mx-1' style={{minWidth: "48px", objectFit: "cover", backgroundPosition: "bottom" , backgroundImage: `url(${bg})`}} />
                         ))
                     }
                 </div>
