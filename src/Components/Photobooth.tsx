@@ -33,6 +33,7 @@ export default function Photobooth() {
                 <Camera 
                     key={`camera-${retakeCount}`}
                     onCaptureComplete={handleCaptureComplete}
+                    images = {capturedImages}
                     capturedImages={capturedImages}
                     isDone={isDone} 
                 />

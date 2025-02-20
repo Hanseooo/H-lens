@@ -5,7 +5,10 @@
   font-family: "Poppins", serif;
   font-weight: 400;
   font-style: normal;
+  scrollbar-width: none;
+
 }
+
 
 
 .containers {
@@ -41,9 +44,18 @@
 .fourByThree {
   aspect-ratio: 4/3 !important;
 }
+.imgPreview {
+  width: 165px;
+  transform: scaleX(-1);
+  object-fit: cover;
+  background-position: center;
+}
 .cameraContainer {
   width: 80%;
   max-width: 520px;
+}
+.capturedImgContainer {
+  margin-top: -20px;
 }
 .reduceMarginTop {
   margin-top: -10vh;
@@ -231,6 +243,9 @@
 @media (max-width: 578px) {
   .cameraContainer {
     width: 95%;
+  }
+  .imgPreview {
+    width: 100px;
   }
 
 }
