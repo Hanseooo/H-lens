@@ -7,6 +7,7 @@ import Photobooth from './Components/Photobooth';
 
 import './App.css'
 import { useState } from 'react';
+import About from './Components/About';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
     <>
    {activeComponent === 'home' && <Home onChangeView = {handleActiveComponent} handleStopTimer = {handleStopTimer} />}
    {activeComponent === 'photobooth' && <Photobooth stopTimer = {stopTimer} handleStopTimer = {handleStopTimer} />}
+   {activeComponent === 'about' && <About  handleStopTimer = {handleStopTimer} />}
    <Navbar onChangeView = {handleActiveComponent} />
    </>
   )

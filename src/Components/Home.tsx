@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 // import Navbar from './/Navbar'
 
+import AboutContent from './AboutContent';
+
 interface HomeProps {
     onChangeView: (view: string) => void,
     handleStopTimer: (decision: boolean) => void
@@ -23,6 +25,7 @@ export default function Home( { onChangeView, handleStopTimer }:HomeProps ) {
             </div>
             <Button onClick={() => onChangeView('photobooth')} className='btn btn-light mt-2 shadow jello-horizontal'>Get Started</Button>
         </Container>
+
         {/* <Navbar/> */}
         </>
     )
