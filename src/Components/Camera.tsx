@@ -208,6 +208,7 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
                         }
                 </div>
             </div>
+            <p className='text-center mt-4'>note: ios browsers does not support filters</p>
         </Container>
     )
 }

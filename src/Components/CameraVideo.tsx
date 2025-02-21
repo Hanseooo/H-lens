@@ -5,7 +5,7 @@ interface CameraVideoProps {
   isFlashing: boolean;
   videoRef: React.RefObject<HTMLVideoElement | null>;
   filter: string;
-  applyFilters: (filter: string) => string;
+  applyFilters: (filter: string ) => string;
 }
 const CameraVideo = forwardRef<HTMLDivElement, CameraVideoProps>(({ isFlashing, videoRef, filter, applyFilters }, ref) => {
   return (

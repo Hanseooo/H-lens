@@ -36,6 +36,7 @@
 .darkTransparentBg {
   background-color: rgba(30, 30, 30, 0.5) !important;;
   backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px);
 }
 .square{
   aspect-ratio: 1/1 !important;
@@ -108,6 +109,30 @@
   width: 50%;
   left: 50%;
 }
+
+.monochrome {
+  filter: grayscale(100%) contrast(90%) saturate(95%);
+  -webkit-filter: grayscale(100%) contrast(90%) saturate(95%)
+}
+
+.sepia {
+  filter: sepia(50%);
+  -webkit-filter: sepia(50%)
+}
+
+.monosepia {
+  filter: grayscale(50%) sepia(25%) brightness(125%) saturate(110%);
+  -webkit-filter: grayscale(50%) sepia(25%) brightness(125%) saturate(110%)
+}
+
+.brightness {
+  filter: brightness(150%);
+  -webkit-filter: brightness(150%)
+}
+.none {
+  filter:brightness(100%);
+  -webkit-filter: brightness(100%)
+ }
 
 @keyframes cameraFlash {
   0% { background-color: white; }

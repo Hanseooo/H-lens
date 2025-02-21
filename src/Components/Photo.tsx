@@ -19,6 +19,8 @@ export default function Photo( {images, handleRetake}: PhotoProps)  {
     const handleDownload = async () => {
         const photoStrip = document.querySelector('.photoStrip') as HTMLElement;
         if (!photoStrip) return;
+        photoStrip.classList.remove('tilt-in-tl');
+
     
         try {
             const canvas = await html2canvas(photoStrip, {
@@ -37,6 +39,9 @@ export default function Photo( {images, handleRetake}: PhotoProps)  {
         } catch (error) {
             console.error('Error generating canvas:', error);
         }
+        finally {
+        photoStrip.classList.add('tilt-in-tl');
+    }
     };
 
     const handleSetBackground = (setType:string, setValue:string) => {
