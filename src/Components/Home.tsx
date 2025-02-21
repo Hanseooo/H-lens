@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 // import Navbar from './/Navbar'
 
-import AboutContent from './AboutContent';
-
 interface HomeProps {
     onChangeView: (view: string) => void,
     handleStopTimer: (decision: boolean) => void
