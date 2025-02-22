@@ -40,7 +40,7 @@ export default function Photo( {images, handleRetake}: PhotoProps)  {
             console.error('Error generating canvas:', error);
         }
         finally {
-        photoStrip.classList.add('tilt-in-tl');
+        photoStrip.classList.add('jello-horizontal');
     }
     };
 
@@ -69,8 +69,19 @@ export default function Photo( {images, handleRetake}: PhotoProps)  {
                 <Col sm = {6} className='d-flex justify-content-center mb-2'>
                     <div className='photoStrip tilt-in-tl d-flex flex-column align-items-center p-1' style={currentPhotoBg}>
                         {
-                            images.map((image:string, index:number) => (
-                                    <img key = {index} src= {image}  className='fourByThree m-1' style={{width: "200px", transform: 'scaleX(-1)', objectFit:"cover", backgroundPosition: "center"}}/>
+                            images.map((image: string, index: number) => (
+                                <img 
+                                    key={index} 
+                                    src={image}  
+                                    className='fourByThree m-1' 
+                                    style={{
+                                        width: "200px", 
+                                        height: "150px", 
+                                        transform: 'scaleX(-1)', 
+                                        objectFit: "cover", 
+                                        backgroundPosition: "center"
+                                    }} 
+                                />
                             ))
                         }
                         {/* <h2 className='text-center poppins-light-italic m-3'>H-Lens</h2> */}

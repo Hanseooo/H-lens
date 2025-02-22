@@ -55,7 +55,7 @@
   background-image: url(./assets/cat.jpg);
   background-size: cover;
   background-position: center;
-  transition: 0.5s ease-in-out all;
+  transition: 1s ease-in-out transform;
 }
 .selectFilterBtn:hover {
   cursor: pointer;
