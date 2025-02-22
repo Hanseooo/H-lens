@@ -129,24 +129,38 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
     // }
 
     async function captureImage() {
-        if (videoRef.current && cameraVideoRef.current) {
-            const video = videoRef.current;
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-    
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-                // Apply the filter to the canvas context
-                ctx.filter = applyFilters(filter);
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    
-                const imageData = canvas.toDataURL('image/png');
-                const newImages = [...capturedImages, imageData];
-                onCaptureComplete(newImages, newImages.length === 4);
-            }
+        if (videoRef.current) {
+          const video = videoRef.current;
+          const canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext('2d');
+      
+          if (ctx) {
+            // Apply the filter if defined
+            ctx.filter = applyFilters(filter) || 'none';
+      
+            // Calculate scale factors
+            const scaleX = canvas.width / video.videoWidth;
+            const scaleY = canvas.height / video.videoHeight;
+            const scale = Math.max(scaleX, scaleY); // Ensures cover effect
+      
+            // Centering the image
+            const x = (canvas.width - video.videoWidth * scale) / 2;
+            const y = (canvas.height - video.videoHeight * scale) / 2;
+      
+            // Draw video frame onto the canvas
+            ctx.drawImage(video, x, y, video.videoWidth * scale, video.videoHeight * scale);
+      
+            // Convert to image
+            const imageData = canvas.toDataURL('image/png');
+            const newImages = [...capturedImages, imageData];
+      
+            // Callback with updated images
+            onCaptureComplete(newImages, newImages.length === 4);
+          }
         }
-    }
+      }
 
     useEffect(() => {
         if (stopTimer) {
