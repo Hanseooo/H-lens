@@ -24,7 +24,7 @@ const CameraVideo = forwardRef<HTMLDivElement, CameraVideoProps>(({ isFlashing, 
         transform: 'translate(-50%, -50%)'
       }} />
       <video
-        className=''
+        className='fourByThree'
         ref={videoRef}
         autoPlay
         playsInline
@@ -32,7 +32,8 @@ const CameraVideo = forwardRef<HTMLDivElement, CameraVideoProps>(({ isFlashing, 
           width: '100%',
           maxWidth: '520px',
           transform: 'scaleX(-1)',
-          objectFit: "cover"
+          objectFit: "cover",
+          backgroundPosition: "center"
         }}
       />
     </div>
