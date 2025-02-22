@@ -198,8 +198,8 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
 
 
     return (
-        <Container className='d-flex flex-column align-items-center reduceMarginTop'>
-            <p className='text-light fw-bold fs-4 '>{countdown}</p>
+        <Container className='d-flex flex-column align-items-center '>
+            <p className='text-light fw-bold fs-4'>{countdown}</p>
             <div className='d-flex justify-content-center align-items-center align-items-md-start flex-column flex-md-row'>
                 <div className='d-flex flex-column justify-content-center align-items-center cameraContainer'>
                     <CameraVideo ref = {cameraVideoRef} filter = {filter} applyFilters = {applyFilters} isFlashing={isFlashing} videoRef={videoRef}  />
