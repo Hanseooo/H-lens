@@ -15,7 +15,7 @@ export default function About( { handleStopTimer }: AboutProps) {
 
     return(
         <Container fluid className='containers home d-flex justify-content-evenly align-items-center flex-column'>
-            <div>
+            <div style={{marginTop: "-40px"}}>
                 <AboutContent header = "About" body ="H-lens is all about capturing moments easily through the web.
                     Using a virtual " italic='Photobooth' body2="users can easily take
                     photos and express themselves just like in a photobooth." />
