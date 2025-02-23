@@ -27,7 +27,7 @@ export default function Photobooth( { stopTimer, handleStopTimer }: PhotoboothPr
     useEffect(() => {
         const timer = setTimeout(() => {
             setToggleInstructions(true);
-        }, 5000);
+        }, 4500);
 
         return () => clearTimeout(timer); // Cleanup on unmount
     }, []);
