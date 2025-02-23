@@ -6,6 +6,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons'
 import Camera from './Camera';
 import Photo from './Photo';
 import { useEffect, useState } from 'react';
+import RotatePhone from './rotatePhone';
 
 interface PhotoboothProps {
     stopTimer: boolean,
@@ -17,10 +18,19 @@ export default function Photobooth( { stopTimer, handleStopTimer }: PhotoboothPr
     const [capturedImages, setCapturedImages] = useState<string[]>([]);
     const [isDone, setIsDone] = useState(false);
     const [retakeCount, setRetakeCount] = useState(0);
+    const [toggleInstructions, setToggleInstructions] = useState(false);
 
     useEffect(() => {
         handleStopTimer(false)
     })
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setToggleInstructions(true);
+        }, 5000);
+
+        return () => clearTimeout(timer); // Cleanup on unmount
+    }, []);
 
 
     const handleCaptureComplete = (images: string[], done: boolean) => {
@@ -36,8 +46,9 @@ export default function Photobooth( { stopTimer, handleStopTimer }: PhotoboothPr
 
     return(
         <Container fluid className='containers photobooth d-flex justify-content-center align-items-center flex-column'>
-            {!startCamera && <Instructions />}
-            {!startCamera && <Button onClick={() => {setStartCamera(true) }} className='btn jello-horizontal btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg rounded-4'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
+            {(!startCamera && !toggleInstructions) && <RotatePhone />}
+            {(!startCamera && toggleInstructions) && <Instructions />}
+            {(!startCamera && toggleInstructions) && <Button onClick={() => {setStartCamera(true) }} className='btn jello-horizontal btn-light text-light border-2 mt-4 shadow d-flex align-items-center darkTransparentBg rounded-4'><FontAwesomeIcon icon={faCamera} className='fs-2 m-1' /> Start Capturing</Button>}
             {(!isDone && startCamera) && 
                 <Camera 
                     key={`camera-${retakeCount}`}

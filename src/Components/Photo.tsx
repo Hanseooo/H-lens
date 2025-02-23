@@ -20,48 +20,28 @@ export default function Photo( {images, handleRetake}: PhotoProps)  {
         const photoStrip = document.querySelector('.photoStrip') as HTMLElement;
         if (!photoStrip) return;
         photoStrip.classList.remove('tilt-in-tl');
+
     
         try {
-            const newImages = await Promise.all(images.map(async (image) => {
-                const img = new Image();
-                img.src = image;
-                await img.decode(); // Ensure the image is loaded
+            const canvas = await html2canvas(photoStrip, {
+                scale: 2, // Increase for higher quality
+                useCORS: true, // Handle external images
+                allowTaint: true, // Allow cross-origin images
+                logging: true, // Helpful for debugging
+                backgroundColor: '#ffffff' // Match your background
+            });
     
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-    
-                // Assert that ctx is not null
-                if (!ctx) {
-                    console.error('Failed to get canvas context');
-                    return null; // Skip this image
-                }
-    
-                // Set canvas dimensions based on desired aspect ratio
-                const aspectRatio = 4 / 3;
-                const width = 200; // Fixed width
-                const height = width / aspectRatio; // Calculate height based on aspect ratio
-                canvas.width = width;
-                canvas.height = height;
-    
-                // Draw the image on the canvas with object-fit: cover
-                ctx.drawImage(img, 0, 0, width, height);
-    
-                return canvas.toDataURL('image/png');
-            }));
-    
-            // Filter out any null values from newImages
-            const validImages = newImages.filter(image => image !== null);
-    
-            // Trigger download of the combined images
+            // Trigger download
             const link = document.createElement('a');
             link.download = 'h-lens-photobooth.png';
-            link.href = validImages[0]; // For simplicity, download the first valid image
+            link.href = canvas.toDataURL('image/png', 1.0);
             link.click();
         } catch (error) {
             console.error('Error generating canvas:', error);
-        } finally {
-            photoStrip.classList.add('jello-horizontal');
         }
+        finally {
+        photoStrip.classList.add('jello-horizontal');
+    }
     };
 
     const handleSetBackground = (setType:string, setValue:string) => {

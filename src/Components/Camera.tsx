@@ -128,28 +128,6 @@ export default function Camera( { onCaptureComplete, capturedImages, isDone, ima
     //     }
     // }
 
-
-    useEffect(() => {
-        const handleOrientationChange = () => {
-            if (videoRef.current) {
-                const video = videoRef.current;
-                if (window.matchMedia("(orientation: portrait)").matches) {
-                    // Set video dimensions to landscape
-                    video.width = 1280; // Example landscape width
-                    video.height = 720; // Example landscape height
-                } else {
-                    // Set video dimensions to default
-                    video.width = video.videoWidth || 1280; // Fallback to a default width
-                    video.height = video.videoHeight || 720; // Fallback to a default height
-                }
-            }
-        };
-    
-        window.addEventListener('orientationchange', handleOrientationChange);
-        return () => {
-            window.removeEventListener('orientationchange', handleOrientationChange);
-        };
-    }, [videoRef]);
     
     async function captureImage() {
         if (videoRef.current) {
